@@ -1,6 +1,7 @@
 # HW1 Светцов 2 группа
 
 ССылка на colab с для подсчета скаффолдов и контигов: https://colab.research.google.com/drive/1jYZ0JFIuaC1HirGNG5c60fDJqJnSeXkI?usp=sharing
+
 Сид: 518
 Выберем случайные семплы из исходных последовательностей:
 
