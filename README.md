@@ -4,23 +4,23 @@
 Сид: 518
 Выберем случайные семплы из исходных последовательностей:
 
-seqtk sample -s518 oilMP_S4_L001_R1_001.fastq 1500000 > sample_oilMP_S4_L001_R1_001.fastq
-seqtk sample -s518 oilMP_S4_L001_R2_001.fastq 1500000 > sample_oilMP_S4_L001_R2_001.fastq
-seqtk sample -s518 oil_R1.fastq 5000000 > sample_oil_R1.fastq
-seqtk sample -s518 oil_R2.fastq 5000000 > sample_oil_R2.fastq
+        seqtk sample -s518 oilMP_S4_L001_R1_001.fastq 1500000 > sample_oilMP_S4_L001_R1_001.fastq
+        seqtk sample -s518 oilMP_S4_L001_R2_001.fastq 1500000 > sample_oilMP_S4_L001_R2_001.fastq
+        seqtk sample -s518 oil_R1.fastq 5000000 > sample_oil_R1.fastq
+        seqtk sample -s518 oil_R2.fastq 5000000 > sample_oil_R2.fastq
 
 
 Соберем статистику по каждому файлу через fastqc и xargs, результаты запихнем в папку fastqc, затем объединим их в один отчет с помощью multiqc в папку multiqc:
 
-mkdir fastqc
-mkdir multiqc
-ls sample* | xargs -tI{} fastqc -o fastqc {}
-multiqc -o multiqc fastqc
+        mkdir fastqc
+        mkdir multiqc
+        ls sample* | xargs -tI{} fastqc -o fastqc {}
+        multiqc -o multiqc fastqc
 
 
 Я скачивал файлы с помощью команды scp:
 
-scp -P 5222 -i {путь к ключу} fasvettsov@92.242.58.92:/home/fasvettsov/hw1/multiqc/multiqc_report.html .
+        scp -P 5222 -i {путь к ключу} fasvettsov@92.242.58.92:/home/fasvettsov/hw1/multiqc/multiqc_report.html .
 
 
 Анализ исходных чтений multiqc:
@@ -49,3 +49,28 @@ scp -P 5222 -i {путь к ключу} fasvettsov@92.242.58.92:/home/fasvettsov
     platanus_trim sample_oil_R1.fastq sample_oil_R2.fastq
     platanus_internal_trim sample_oilMP_S4_L001_R1_001.fastq sample_oilMP_S4_L001_R2_001.fastq
     ls \*trimmed | xargs -tI{} fastqc -o trim_fastqc {}
+    multiqc -o trim_multiqc trim_fastqc
+    
+    scp -P 5222 -i {путь к ключу} fasvettsov@92.242.58.92:/home/fasvettsov/hw1/trim_multiqc/multiqc_report.html .
+
+
+Анализ обрезанных чтений multiqc:
+
+В сравнении с необрезанными чтениями уменьшились общее число последовательностей и (немного) процент дупликатов: 
+
+![image](https://user-images.githubusercontent.com/86132283/139133458-786df22a-ba13-4446-ba3b-c4cc539dfd82.png)
+
+
+Качество чтений: после подрезания качества всех тений находятся на допустимом уровне:
+
+![image](https://user-images.githubusercontent.com/86132283/139133804-5594d247-5857-4f4b-9fda-85b8c5c00f5a.png)
+
+
+Содержание адаптеров: ожидаемо, их больше нет (<1%):
+
+![image](https://user-images.githubusercontent.com/86132283/139134007-3a3d6ce1-9335-43d2-b05e-a537a6eae38f.png)
+
+
+Соберем геном с помощью platanus assemble: 
+
+        platanus assemble -o fasvetPoil -t 2  -f sample_oil_R1.fastq.trimmed  sample_oil_R2.fastq.trimmed
