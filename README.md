@@ -1,6 +1,6 @@
 # HW1 Светцов 2 группа
 
-
+ССылка на colab с для подсчета скаффолдов и контигов: https://colab.research.google.com/drive/1jYZ0JFIuaC1HirGNG5c60fDJqJnSeXkI?usp=sharing
 Сид: 518
 Выберем случайные семплы из исходных последовательностей:
 
@@ -81,6 +81,15 @@
 Общее число контигов: 614
 Общая длина контигов: 3925614
 Длина самого длинного контига: 179307
-ССылка на colab с для подсчета: https://colab.research.google.com/drive/1jYZ0JFIuaC1HirGNG5c60fDJqJnSeXkI?usp=sharing
 
 
+Соберем скаффолды из контигов:
+
+    platanus scaffold -o fasvetPoil -t 2 -c fasvetPoil_contig.fa -IP1 sample_oil_R1.fastq.trimmed sample_oil_R2.fastq.trimmed -OP2 sample_oilMP_S4_L001_R1_001.fastq.int_trimmed sample_oilMP_S4_L001_R2_001.fastq.int_trimmed
+
+    scp -P 5222 -i {путь к ключу} fasvettsov@92.242.58.92:/home/fasvettsov/hw1/fasvetPoil_scaffold.fa .
+    
+
+Общее число скаффолдов: 69
+Общая длина скаффолдов: 3875742
+Длина самого длинного скаффолда: 3831628
