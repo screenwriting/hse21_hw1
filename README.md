@@ -42,3 +42,10 @@ scp -P 5222 -i {путь к ключу} fasvettsov@92.242.58.92:/home/fasvettsov
 ![image](https://user-images.githubusercontent.com/86132283/139125001-586363ca-828f-463c-a553-143083f7c0bc.png)
 
 
+Чтобы это исправить, вырежем адаптеры из чтений с помощью platanus trim и internal trim (для MP), а затем сделаем по ним отчет:
+
+    mkdir trim_fastqc
+    mkdir trim_multiqc
+    platanus_trim sample_oil_R1.fastq sample_oil_R2.fastq
+    platanus_internal_trim sample_oilMP_S4_L001_R1_001.fastq sample_oilMP_S4_L001_R2_001.fastq
+    ls \*trimmed | xargs -tI{} fastqc -o trim_fastqc {}
