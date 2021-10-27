@@ -74,3 +74,13 @@
 Соберем геном с помощью platanus assemble: 
 
         platanus assemble -o fasvetPoil -t 2  -f sample_oil_R1.fastq.trimmed  sample_oil_R2.fastq.trimmed
+        
+        scp -P 5222 -i {путь к ключу} fasvettsov@92.242.58.92:/home/fasvettsov/hw1/fasvetPoil_contig.fa .
+
+
+Общее число контигов: 614
+Общая длина контигов: 3925614
+Длина самого длинного контига: 179307
+ССылка на colab с для подсчета: https://colab.research.google.com/drive/1jYZ0JFIuaC1HirGNG5c60fDJqJnSeXkI?usp=sharing
+
+
